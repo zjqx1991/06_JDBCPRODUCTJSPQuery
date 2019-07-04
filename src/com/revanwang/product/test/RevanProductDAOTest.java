@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
+import com.revanwang.product.template.RevanJdbcTemplate;
 
 /**
  * @Desc 	
@@ -28,30 +29,26 @@ public class RevanProductDAOTest {
 	@Test
 	public void testSave() {
 		RevanProduct product = new RevanProduct();
-		product.setProductName("樱桃");
+		product.setProductName("樱桃-2");
 		product.setDir_id(1L);
 		product.setSalePrice(new BigDecimal(400.99));
-		product.setSupplier("樱桃");
-		product.setBrand("樱桃");
+		product.setSupplier("樱桃-2");
+		product.setBrand("樱桃-2");
 		product.setCutoff(new BigDecimal(0.85));
 		product.setCostPrice(new BigDecimal(345.89));
 		
 		productDAO.save(product);
 	}
 
-	
 	@Test
 	public void testDelete() {
-		productDAO.delete(6L);
+		productDAO.delete(7L);
 	}
-
-	/**
-	 * Test method for {@link com.revanwang.product.dao.IRevanProductDAO#update(com.revanwang.product.domain.RevanProduct)}.
-	 */
+	
 	@Test
 	public void testUpdate() {
 		RevanProduct product = new RevanProduct();
-		product.setId(1L);
+		product.setId(2L);
 		product.setProductName("樱桃");
 		product.setDir_id(1L);
 		product.setSalePrice(new BigDecimal(400.99));
@@ -67,7 +64,7 @@ public class RevanProductDAOTest {
 	
 	@Test
 	public void testGetProduct() {
-		RevanProduct product = productDAO.getProduct(1L);
+		RevanProduct product = productDAO.getProduct(6L);
 		System.out.println(product.toString());
 	}
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="webApp/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="webApp/WEB-INF/lib/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/druid-1.0.15.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lombok"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="webApp/WEB-INF/classes"/>
