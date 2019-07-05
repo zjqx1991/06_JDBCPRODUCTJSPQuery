@@ -13,7 +13,6 @@ import org.junit.Test;
 import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
-import com.revanwang.product.template.RevanJdbcTemplate;
 
 /**
  * @Desc 	

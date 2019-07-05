@@ -3,15 +3,10 @@
  */
 package com.revanwang.product.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.domain.RevanProduct;
-import com.revanwang.product.jdbc.RevanJdbcUtils;
 import com.revanwang.product.template.RevanJdbcTemplate;
 import com.revanwang.product.template.handle.impl.RevanResultHandle;
 

@@ -5,8 +5,6 @@ package com.revanwang.product.template;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.revanwang.product.jdbc.RevanJdbcUtils;
 import com.revanwang.product.template.handle.IRevanResultHandle;

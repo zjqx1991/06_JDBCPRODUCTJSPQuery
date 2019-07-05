@@ -3,9 +3,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="webApp/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/servlet-api.jar" sourcepath="/Users/revanwang/Desktop/JV/高级/04_JavaWeb(一期龙哥主讲,xmind相同)/apache-tomcat-7.0.94-src"/>
 	<classpathentry kind="lib" path="webApp/WEB-INF/lib/mysql-connector-java-8.0.16.jar"/>
 	<classpathentry kind="lib" path="webApp/WEB-INF/lib/druid-1.0.15.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="webApp/WEB-INF/lib/standard.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lombok"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="webApp/WEB-INF/classes"/>
