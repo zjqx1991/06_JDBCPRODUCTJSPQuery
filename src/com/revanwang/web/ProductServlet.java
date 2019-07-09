@@ -70,6 +70,17 @@ public class ProductServlet extends HttpServlet {
 		String brand = req.getParameter("brand");
 		String cutoff = req.getParameter("cutoff");
 		String costPrice = req.getParameter("costPrice");
+		
+		System.out.println("id" + id);
+		System.out.println("productName" + productName);
+		System.out.println("dir_id" + dir_id);
+		System.out.println("salePrice" + salePrice);
+		System.out.println("supplier" + supplier);
+		System.out.println("brand" + brand);
+		System.out.println("cutoff" + cutoff);
+		System.out.println("costPrice" + costPrice);
+		
+		
 		RevanProduct product = new RevanProduct();
 		product.setProductName(productName);
 		product.setDir_id(Long.valueOf(dir_id));
@@ -78,7 +89,7 @@ public class ProductServlet extends HttpServlet {
 		product.setBrand(brand);
 		product.setCutoff(new BigDecimal(cutoff));
 		product.setCostPrice(new BigDecimal(costPrice));
-
+		
 		//2、处理业务逻辑
 		if (hasLength(id)) {
 			//编辑

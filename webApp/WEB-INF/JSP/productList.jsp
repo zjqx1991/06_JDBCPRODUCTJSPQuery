@@ -12,8 +12,8 @@
 </head>
 <body>
 	<a href="/product?cmd=edit">Add</a>
-	<table border="1" width=80% >
-		<tr>
+	<table border="1" cellpadding="2" cellspacing="0" width=800 >
+		<tr bgcolor="orange">
 			<th>id</th>
 			<th>productName</th>
 			<th>dir_id</th>
@@ -25,8 +25,8 @@
 			<th colspan="2">option</th>
 		</tr>
 		
-		<c:forEach items="${list}" var='item' >
-			<tr>
+		<c:forEach items="${list}" var='item' varStatus="status" >
+			<tr style="background-color:${status.count % 2 == 0 ? 'gray' : ''};">
 				<td>${item.getId()}</td>
 				<td>${item.getProductName()}</td>
 				<td>${item.getDir_id()}</td>
