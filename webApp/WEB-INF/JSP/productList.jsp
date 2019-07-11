@@ -15,28 +15,28 @@
 	<table border="1" cellpadding="2" cellspacing="0" width=800 >
 		<tr bgcolor="orange">
 			<th>id</th>
-			<th>productName</th>
-			<th>dir_id</th>
-			<th>salePrice</th>
-			<th>supplier</th>
-			<th>brand</th>
-			<th>cutoff</th>
-			<th>costPrice</th>
-			<th colspan="2">option</th>
+			<th>商品名称</th>
+			<th>商品分类</th>
+			<th>零售价</th>
+			<th>供应商</th>
+			<th>品牌</th>
+			<th>折扣</th>
+			<th>成本价</th>
+			<th colspan="2">操作</th>
 		</tr>
 		
 		<c:forEach items="${list}" var='item' varStatus="status" >
 			<tr style="background-color:${status.count % 2 == 0 ? 'gray' : ''};">
-				<td>${item.getId()}</td>
-				<td>${item.getProductName()}</td>
-				<td>${item.getDir_id()}</td>
-				<td>${item.getSalePrice()}</td>
-				<td>${item.getSupplier()}</td>
-				<td>${item.getBrand()}</td>
-				<td>${item.getCutoff()}</td>
-				<td>${item.getCostPrice()}</td>
-				<td><a href="/product?cmd=edit&id=${item.getId()}">Edit</a></td>
-				<td><a href="/product?cmd=delete&id=${item.getId()}">Delete</a></td>
+				<td>${item.product.getId()}</td>
+				<td>${item.product.getProductName()}</td>
+				<td>${item.productDir.dir_name}</td>
+				<td>${item.product.getSalePrice()}</td>
+				<td>${item.product.getSupplier()}</td>
+				<td>${item.product.getBrand()}</td>
+				<td>${item.product.getCutoff()}</td>
+				<td>${item.product.getCostPrice()}</td>
+				<td><a href="/product?cmd=edit&id=${item.product.getId()}">Edit</a></td>
+				<td><a href="/product?cmd=delete&id=${item.product.getId()}">Delete</a></td>
 			</tr>
 		</c:forEach>
 		

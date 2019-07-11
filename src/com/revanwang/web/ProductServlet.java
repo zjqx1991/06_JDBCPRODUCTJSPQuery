@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.revanwang.product.dao.IRevanProductDAO;
+import com.revanwang.product.dao.IRevanProductDirDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
+import com.revanwang.product.dao.impl.RevanProductDirDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
+import com.revanwang.product.domain.RevanProductDir;
+import com.revanwang.product.domain.RevanProductInfo;
 
 /**
  * @Desc 	
@@ -27,6 +31,7 @@ import com.revanwang.product.domain.RevanProduct;
 public class ProductServlet extends HttpServlet {
 
 	IRevanProductDAO productDAO = new RevanProductDAOImpl();
+	IRevanProductDirDAO productDirDAO = new RevanProductDirDAOImpl();
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -71,16 +76,6 @@ public class ProductServlet extends HttpServlet {
 		String cutoff = req.getParameter("cutoff");
 		String costPrice = req.getParameter("costPrice");
 		
-		System.out.println("id" + id);
-		System.out.println("productName" + productName);
-		System.out.println("dir_id" + dir_id);
-		System.out.println("salePrice" + salePrice);
-		System.out.println("supplier" + supplier);
-		System.out.println("brand" + brand);
-		System.out.println("cutoff" + cutoff);
-		System.out.println("costPrice" + costPrice);
-		
-		
 		RevanProduct product = new RevanProduct();
 		product.setProductName(productName);
 		product.setDir_id(Long.valueOf(dir_id));
@@ -117,15 +112,18 @@ public class ProductServlet extends HttpServlet {
 		//1、获取请求参数
 		String idString = req.getParameter("id");
 		//2、处理业务逻辑
-		RevanProduct product = null;
+		RevanProductInfo productInfo = null;
 		if (hasLength(idString)) {
 			//编辑
-			product = productDAO.getProduct(Long.valueOf(idString));
+			productInfo = productDAO.getProductInfo(Long.valueOf(idString));
 		}
 		else {
 			//新增
 		}
-		req.setAttribute("product", product);
+		//获取商品分类
+		List<RevanProductDir> productDirs = productDirDAO.getList();
+		req.setAttribute("productDir", productDirs);
+		req.setAttribute("productInfo", productInfo);
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productEdit.jsp").forward(req, resp);
 	}
@@ -133,7 +131,7 @@ public class ProductServlet extends HttpServlet {
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//1、获取请求参数
 		//2、处理业务请求
-		List<RevanProduct> list = productDAO.getList();
+		List<RevanProductInfo> list = productDAO.getProductList();
 		req.setAttribute("list", list);
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productList.jsp").forward(req, resp);

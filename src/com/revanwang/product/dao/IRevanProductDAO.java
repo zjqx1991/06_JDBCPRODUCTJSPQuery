@@ -6,6 +6,7 @@ package com.revanwang.product.dao;
 import java.util.List;
 
 import com.revanwang.product.domain.RevanProduct;
+import com.revanwang.product.domain.RevanProductInfo;
 
 /**
  * @Desc 	
@@ -49,10 +50,27 @@ public interface IRevanProductDAO {
 	RevanProduct getProduct(Long id);
 	
 	/**
+	 * @Desc	查询指定id的商品详情
+	 * @param id
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 11, 201910:20:54 AM
+	 */
+	RevanProductInfo getProductInfo(Long id);
+	
+	/**
 	 * @Desc 获取所有商品
 	 * @return
 	 * @auther Revan Wang
 	 * @Date Jul 4, 20194:10:37 PM
 	 */
 	List<RevanProduct> getList();
+	
+	/**
+	 * @Desc	获取详细的商品信息
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 11, 20199:48:38 AM
+	 */
+	List<RevanProductInfo>getProductList();
 }

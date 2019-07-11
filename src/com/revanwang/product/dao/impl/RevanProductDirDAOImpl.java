@@ -38,6 +38,7 @@ public class RevanProductDirDAOImpl implements IRevanProductDirDAO {
 
 	@Override
 	public RevanProductDir getProduct(Long id) {
+		System.out.println("---------- 获取分类信息 ---------");
 		String sql = "SELECT * FROM t_product_dir WHERE id = ?";
 		List<RevanProductDir> list = RevanJdbcTemplate.executeQuery(sql, new RevanResultHandle<>(RevanProductDir.class), id);
 		return list.size() == 1 ? list.get(0) : null;
