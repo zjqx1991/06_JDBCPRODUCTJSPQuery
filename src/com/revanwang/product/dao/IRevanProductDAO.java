@@ -122,4 +122,16 @@ public interface IRevanProductDAO {
 	 * @Date Jul 12, 201911:14:35 AM
 	 */
 	List<RevanProductInfo>query4(RevanProductQueryObject queryObject);
+	
+
+	/**
+	 * @Desc				抽取查询对象模板
+	 * @param name			商品名称
+	 * @param minPrice		最低价格
+	 * @param maxPrice		最高价格
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:14:35 AM
+	 */
+	List<RevanProductInfo>query5(RevanProductQueryObject queryObject);
 }

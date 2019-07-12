@@ -309,9 +309,38 @@ public class RevanProductDAOImpl implements IRevanProductDAO {
 
 	@Override
 	public List<RevanProductInfo> query4(RevanProductQueryObject queryObject) {
+		String sql = "SELECT * FROM t_product" + queryObject.querySQL();
 		List<RevanProductInfo> productInfos = new ArrayList<>();
 		List<RevanProduct> proList = RevanJdbcTemplate.executeQuery(
-				queryObject.querySQL(),
+				sql,
+				new RevanResultHandle<RevanProduct>(RevanProduct.class), 
+				queryObject.queryParams().toArray()
+				);
+		for (RevanProduct pd : proList) {
+			//分类id
+			Long dir_id = pd.getDir_id();
+			//获取缓存对象
+			RevanProductDir productDir = productDirMap.get(dir_id);
+			if (productDir == null) {
+				productDir = dirDAO.getProduct(dir_id);
+				//存储到缓存中
+				productDirMap.put(dir_id, productDir);
+			}
+			//商品详情
+			RevanProductInfo productInfo = new RevanProductInfo();
+			productInfo.setProduct(pd);
+			productInfo.setProductDir(productDir);
+			productInfos.add(productInfo);
+		}
+		return productInfos;
+	}
+
+	@Override
+	public List<RevanProductInfo> query5(RevanProductQueryObject queryObject) {
+		String sql = "SELECT * FROM t_product" + queryObject.querySQL();
+		List<RevanProductInfo> productInfos = new ArrayList<>();
+		List<RevanProduct> proList = RevanJdbcTemplate.executeQuery(
+				sql,
 				new RevanResultHandle<RevanProduct>(RevanProduct.class), 
 				queryObject.queryParams().toArray()
 				);
