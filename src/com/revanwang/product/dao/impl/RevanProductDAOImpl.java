@@ -26,9 +26,9 @@ import com.revanwang.product.template.handle.impl.RevanResultHandle;
  * @Date Jul 4, 20194:06:45 PM
  */
 public class RevanProductDAOImpl implements IRevanProductDAO {
-	IRevanProductDirDAO dirDAO = new RevanProductDirDAOImpl();
+	private IRevanProductDirDAO dirDAO = new RevanProductDirDAOImpl();
 	//请求分类信息缓存
-	Map<Long, RevanProductDir> productDirMap = new HashMap<Long, RevanProductDir>();
+	private Map<Long, RevanProductDir> productDirMap = new HashMap<Long, RevanProductDir>();
 	
 	@Override
 	public void save(RevanProduct product) {

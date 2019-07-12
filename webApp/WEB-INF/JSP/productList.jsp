@@ -11,6 +11,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form action="/product" method="POST">
+		商品名称<input type="text" name="cpname" >
+		最低价 <input type="number" name="minPrice" >
+		最高价 <input type="number" name="maxPrice" >
+		<input type="submit" value="查询" >
+	</form>
 	<a href="/product?cmd=edit">Add</a>
 	<table border="1" cellpadding="2" cellspacing="0" width=800 >
 		<tr bgcolor="orange">
