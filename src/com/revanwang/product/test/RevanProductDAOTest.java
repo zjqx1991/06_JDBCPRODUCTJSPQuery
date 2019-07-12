@@ -102,4 +102,14 @@ public class RevanProductDAOTest {
 			System.out.println(it.next().toString());
 		}
 	}
+	
+	@Test
+	public void testQuery2() {
+		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(102), new BigDecimal(102));
+//		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(100), new BigDecimal(200));
+		Iterator<RevanProductInfo> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
+		}
+	}
 }

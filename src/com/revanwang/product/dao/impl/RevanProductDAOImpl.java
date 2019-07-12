@@ -16,6 +16,7 @@ import com.revanwang.product.dao.IRevanProductDirDAO;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductDir;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.query.RevanProductQueryObject;
 import com.revanwang.product.template.RevanJdbcTemplate;
 import com.revanwang.product.template.handle.IRevanResultHandle;
 import com.revanwang.product.template.handle.impl.RevanResultHandle;
@@ -181,6 +182,73 @@ public class RevanProductDAOImpl implements IRevanProductDAO {
 	
 	private boolean hasLength(String string) {
 		return string != null && string.length() > 0;
+	}
+
+	@Override
+	public List<RevanProductInfo> query2(RevanProductQueryObject queryObject) {
+		//拼接SQL语句
+				StringBuilder sql = new StringBuilder("SELECT * FROM t_product");
+				//接收参数值
+				List<Object> paramsList = new ArrayList<>();
+				//判断是否是第一个参数
+				boolean isFrist = true;
+				//如果商品名称存在
+				if (hasLength(queryObject.getProductName())) {
+					if (isFrist) {
+						sql.append(" WHERE ");
+						isFrist = false;
+					}
+					else {
+						sql.append(" AND ");
+					}
+					sql.append("productName Like ?");
+					paramsList.add("%"+queryObject.getProductName()+"%");
+				}
+				
+				if (queryObject.getMinPrice() != null) {
+					if (isFrist) {
+						sql.append(" WHERE ");
+						isFrist = false;
+					}
+					else {
+						sql.append(" AND ");
+					}
+					sql.append("salePrice >= ?");
+					paramsList.add(queryObject.getMinPrice());
+				}
+				
+				if (queryObject.getMaxPrice() != null) {
+					if (isFrist) {
+						sql.append(" WHERE ");
+						isFrist = false;
+					}
+					else {
+						sql.append(" AND ");
+					}
+					sql.append("salePrice <= ?");
+					paramsList.add(queryObject.getMaxPrice());
+				}
+				System.out.println("查询条件"+sql.toString());
+				System.out.println("查询参数"+paramsList.toString());
+				List<RevanProductInfo> productInfos = new ArrayList<>();
+				List<RevanProduct> proList = RevanJdbcTemplate.executeQuery(sql.toString(), new RevanResultHandle<RevanProduct>(RevanProduct.class), paramsList.toArray());
+				for (RevanProduct pd : proList) {
+					//分类id
+					Long dir_id = pd.getDir_id();
+					//获取缓存对象
+					RevanProductDir productDir = productDirMap.get(dir_id);
+					if (productDir == null) {
+						productDir = dirDAO.getProduct(dir_id);
+						//存储到缓存中
+						productDirMap.put(dir_id, productDir);
+					}
+					//商品详情
+					RevanProductInfo productInfo = new RevanProductInfo();
+					productInfo.setProduct(pd);
+					productInfo.setProductDir(productDir);
+					productInfos.add(productInfo);
+				}
+				return productInfos;
 	}
 	
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
  * @Desc 	
@@ -86,4 +87,16 @@ public interface IRevanProductDAO {
 	 * @Date Jul 12, 201911:14:35 AM
 	 */
 	List<RevanProductInfo>query(String name, BigDecimal minPrice, BigDecimal maxPrice);
+	
+
+	/**
+	 * @Desc				查询列表
+	 * @param name			商品名称
+	 * @param minPrice		最低价格
+	 * @param maxPrice		最高价格
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:14:35 AM
+	 */
+	List<RevanProductInfo>query2(RevanProductQueryObject queryObject);
 }
