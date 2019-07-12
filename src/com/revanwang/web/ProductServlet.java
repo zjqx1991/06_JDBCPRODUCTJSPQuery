@@ -20,6 +20,7 @@ import com.revanwang.product.dao.impl.RevanProductDirDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductDir;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
  * @Desc 	
@@ -131,8 +132,18 @@ public class ProductServlet extends HttpServlet {
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//1、获取请求参数
 		//2、处理业务请求
-		List<RevanProductInfo> list = productDAO.getProductList();
+		RevanProductQueryObject queryObject = new RevanProductQueryObject();
+		queryObject.setProductName(req.getParameter("productName"));
+		if (hasLength(req.getParameter("minPrice"))) {
+			queryObject.setMinPrice(new BigDecimal(req.getParameter("minPrice")));
+		}
+		if (hasLength(req.getParameter("maxPrice"))) {
+			queryObject.setMaxPrice(new BigDecimal(req.getParameter("maxPrice")));
+		}
+		
+		List<RevanProductInfo> list = productDAO.query4(queryObject);
 		req.setAttribute("list", list);
+		req.setAttribute("qObject", queryObject);
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productList.jsp").forward(req, resp);
 	}

@@ -90,7 +90,7 @@ public interface IRevanProductDAO {
 	
 
 	/**
-	 * @Desc				查询列表
+	 * @Desc				查询列表(请求参数封装成对象)
 	 * @param name			商品名称
 	 * @param minPrice		最低价格
 	 * @param maxPrice		最高价格
@@ -99,4 +99,27 @@ public interface IRevanProductDAO {
 	 * @Date Jul 12, 201911:14:35 AM
 	 */
 	List<RevanProductInfo>query2(RevanProductQueryObject queryObject);
+
+	/**
+	 * @Desc				查询列表(请求参数封装成对象)优化代码
+	 * @param name			商品名称
+	 * @param minPrice		最低价格
+	 * @param maxPrice		最高价格
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:14:35 AM
+	 */
+	List<RevanProductInfo>query3(RevanProductQueryObject queryObject);
+	
+
+	/**
+	 * @Desc				查询列表(把请求SQL语句 和 SQL参数封装到 请求对象中)
+	 * @param name			商品名称
+	 * @param minPrice		最低价格
+	 * @param maxPrice		最高价格
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:14:35 AM
+	 */
+	List<RevanProductInfo>query4(RevanProductQueryObject queryObject);
 }

@@ -12,9 +12,9 @@
 </head>
 <body>
 	<form action="/product" method="POST">
-		商品名称<input type="text" name="cpname" >
-		最低价 <input type="number" name="minPrice" >
-		最高价 <input type="number" name="maxPrice" >
+		商品名称<input type="text" name="productName" value="${qObject.productName}" >
+		最低价 <input type="number" name="minPrice" value="${qObject.minPrice}" >
+		最高价 <input type="number" name="maxPrice" value="${qObject.maxPrice}" >
 		<input type="submit" value="查询" >
 	</form>
 	<a href="/product?cmd=edit">Add</a>

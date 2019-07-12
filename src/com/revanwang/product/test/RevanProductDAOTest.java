@@ -14,6 +14,7 @@ import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
  * @Desc 	
@@ -105,11 +106,46 @@ public class RevanProductDAOTest {
 	
 	@Test
 	public void testQuery2() {
-		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(102), new BigDecimal(102));
+		RevanProductQueryObject qObject = new RevanProductQueryObject();
+		qObject.setProductName("樱桃");
+		qObject.setMinPrice(new BigDecimal(100));
+		qObject.setMaxPrice(new BigDecimal(200));
+		
+		List<RevanProductInfo> list = productDAO.query2(qObject);
+//		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(102), new BigDecimal(102));
 //		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(100), new BigDecimal(200));
 		Iterator<RevanProductInfo> it = list.iterator();
 		while (it.hasNext()) {
 			System.out.println(it.next().toString());
 		}
 	}
+	
+	@Test
+	public void testQuery3() {
+		RevanProductQueryObject qObject = new RevanProductQueryObject();
+//		qObject.setProductName("樱桃");
+//		qObject.setMinPrice(new BigDecimal(100));
+//		qObject.setMaxPrice(new BigDecimal(200));
+		List<RevanProductInfo> list = productDAO.query3(qObject);
+		Iterator<RevanProductInfo> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
+		}
+	}
+	
+
+	@Test
+	public void testQuery4() {
+		RevanProductQueryObject qObject = new RevanProductQueryObject();
+		qObject.setProductName("樱桃");
+		qObject.setMinPrice(new BigDecimal(100));
+		qObject.setMaxPrice(new BigDecimal(200));
+		List<RevanProductInfo> list = productDAO.query4(qObject);
+		Iterator<RevanProductInfo> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
+		}
+	}
+	
+	
 }
