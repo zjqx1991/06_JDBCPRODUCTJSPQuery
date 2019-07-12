@@ -4,9 +4,13 @@
 package com.revanwang.product.query.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import com.revanwang.product.query.IRevanQuery;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 /**
  * @Desc 	查询对象父类
@@ -35,10 +39,10 @@ abstract public class RevanQueryObject implements IRevanQuery {
 	 * @auther Revan Wang
 	 * @Date Jul 12, 20192:43:08 PM
 	 */
-	protected void addQuery(String condition, Object param) {
+	protected void addQuery(String condition, Object... param) {
 		//添加SQL条件
-		this.conditionList.add(condition);
-		this.paramsList.add(param);
+		this.conditionList.add("(" + condition + ")");
+		this.paramsList.addAll(Arrays.asList(param));
 	}
 	
 	protected boolean hasLength(String string) {
@@ -66,6 +70,7 @@ abstract public class RevanQueryObject implements IRevanQuery {
 
 	@Override
 	public List<Object> queryParams() {
+		System.out.println("SQL查询参数" + this.paramsList.toString());
 		return this.paramsList;
 	}
 

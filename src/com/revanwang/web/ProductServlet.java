@@ -141,8 +141,11 @@ public class ProductServlet extends HttpServlet {
 		if (!"-1".equals(req.getParameter("dir_id")) && hasLength(req.getParameter("dir_id"))) {
 			queryObject.setDir_id(Long.valueOf(req.getParameter("dir_id")));
 		}
+		if (hasLength(req.getParameter("keywords"))) {
+			queryObject.setKeywords(req.getParameter("keywords"));
+		}
 
-		List<RevanProductInfo> list = productDAO.query4(queryObject);
+		List<RevanProductInfo> list = productDAO.query5(queryObject);
 		req.setAttribute("list", list);
 		req.setAttribute("qObject", queryObject);
 		//获取商品分类

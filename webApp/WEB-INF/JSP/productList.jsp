@@ -12,6 +12,8 @@
 </head>
 <body>
 	<form action="/product" method="POST">
+		关键字<input type="search" name="keywords" placeholder="名称/品牌/供应商" value="${qObject.keywords}" >
+		<br/>
 		商品名称<input type="text" name="productName" value="${qObject.productName}" >
 		最低价 <input type="number" name="minPrice" value="${qObject.minPrice}" >
 		最高价 <input type="number" name="maxPrice" value="${qObject.maxPrice}" >

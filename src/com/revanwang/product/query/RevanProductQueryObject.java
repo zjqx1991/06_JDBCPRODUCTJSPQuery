@@ -26,6 +26,7 @@ public class RevanProductQueryObject extends RevanQueryObject {
 	private BigDecimal minPrice;
 	private BigDecimal maxPrice;
 	private Long dir_id;
+	private String keywords;
 
 	@Override
 	public void customQuery() {
@@ -45,5 +46,19 @@ public class RevanProductQueryObject extends RevanQueryObject {
 		if (dir_id != null) {
 			super.addQuery("dir_id = ?", dir_id);
 		}
+		
+		if (super.hasLength(keywords)) {
+			super.addQuery("productName LIKE ? OR brand LIKE ? OR supplier LIKE ?", "%"+keywords+"%", "%"+keywords+"%", "%"+keywords+"%");
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
