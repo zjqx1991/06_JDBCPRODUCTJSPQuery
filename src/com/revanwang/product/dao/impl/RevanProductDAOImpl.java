@@ -117,20 +117,42 @@ public class RevanProductDAOImpl implements IRevanProductDAO {
 		StringBuilder sql = new StringBuilder("SELECT * FROM t_product");
 		//接收参数值
 		List<Object> paramsList = new ArrayList<>();
-		
+		//判断是否是第一个参数
+		boolean isFrist = true;
 		//如果商品名称存在
 		if (hasLength(name)) {
-			sql.append(" WHERE productName Like ?");
+			if (isFrist) {
+				sql.append(" WHERE ");
+				isFrist = false;
+			}
+			else {
+				sql.append(" AND ");
+			}
+			sql.append("productName Like ?");
 			paramsList.add("%"+name+"%");
 		}
 		
 		if (minPrice != null) {
-			sql.append(" AND salePrice >= ?");
+			if (isFrist) {
+				sql.append(" WHERE ");
+				isFrist = false;
+			}
+			else {
+				sql.append(" AND ");
+			}
+			sql.append("salePrice >= ?");
 			paramsList.add(minPrice);
 		}
 		
 		if (maxPrice != null) {
-			sql.append(" AND salePrice <= ?");
+			if (isFrist) {
+				sql.append(" WHERE ");
+				isFrist = false;
+			}
+			else {
+				sql.append(" AND ");
+			}
+			sql.append("salePrice <= ?");
 			paramsList.add(maxPrice);
 		}
 		System.out.println("查询条件"+sql.toString());
