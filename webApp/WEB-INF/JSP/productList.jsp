@@ -15,6 +15,12 @@
 		商品名称<input type="text" name="productName" value="${qObject.productName}" >
 		最低价 <input type="number" name="minPrice" value="${qObject.minPrice}" >
 		最高价 <input type="number" name="maxPrice" value="${qObject.maxPrice}" >
+		类别<select name="dir_id" >
+				<option value="-1" >选择分类</option>
+			<c:forEach items="${productDir}" var='dir' >
+				<option value="${dir.dir_id}" ${dir.dir_id == qObject.dir_id ? "selected" : ""} >${dir.dir_name}</option>
+			</c:forEach>
+		</select>
 		<input type="submit" value="查询" >
 	</form>
 	<a href="/product?cmd=edit">Add</a>

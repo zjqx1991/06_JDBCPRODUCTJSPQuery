@@ -33,9 +33,9 @@ public class ProductServlet extends HttpServlet {
 
 	IRevanProductDAO productDAO = new RevanProductDAOImpl();
 	IRevanProductDirDAO productDirDAO = new RevanProductDirDAOImpl();
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -43,7 +43,7 @@ public class ProductServlet extends HttpServlet {
 		//2、处理业务
 		String cmd = req.getParameter("cmd");
 		//3、跳转页面
-		System.out.print("请求参数："+cmd);
+		System.out.print("请求参数：" + cmd);
 		if (cmd != null) {
 			switch (cmd) {
 			case "save":
@@ -60,12 +60,11 @@ public class ProductServlet extends HttpServlet {
 				list(req, resp);
 				break;
 			}
-		}
-		else {
+		} else {
 			list(req, resp);
 		}
 	}
-	
+
 	protected void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//1、获取请求参数
 		String id = req.getParameter("id");
@@ -76,7 +75,7 @@ public class ProductServlet extends HttpServlet {
 		String brand = req.getParameter("brand");
 		String cutoff = req.getParameter("cutoff");
 		String costPrice = req.getParameter("costPrice");
-		
+
 		RevanProduct product = new RevanProduct();
 		product.setProductName(productName);
 		product.setDir_id(Long.valueOf(dir_id));
@@ -85,14 +84,13 @@ public class ProductServlet extends HttpServlet {
 		product.setBrand(brand);
 		product.setCutoff(new BigDecimal(cutoff));
 		product.setCostPrice(new BigDecimal(costPrice));
-		
+
 		//2、处理业务逻辑
 		if (hasLength(id)) {
 			//编辑
 			product.setId(Long.valueOf(id));
 			productDAO.update(product);
-		}
-		else {
+		} else {
 			//新增
 			productDAO.save(product);
 		}
@@ -104,11 +102,12 @@ public class ProductServlet extends HttpServlet {
 		//1、获取请求参数
 		String id = req.getParameter("id");
 		//2、处理业务请求
-		productDAO.delete(Long.valueOf(id));;
+		productDAO.delete(Long.valueOf(id));
+		;
 		//3、跳转页面
 		resp.sendRedirect("/product");
 	}
-	
+
 	protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//1、获取请求参数
 		String idString = req.getParameter("id");
@@ -117,8 +116,7 @@ public class ProductServlet extends HttpServlet {
 		if (hasLength(idString)) {
 			//编辑
 			productInfo = productDAO.getProductInfo(Long.valueOf(idString));
-		}
-		else {
+		} else {
 			//新增
 		}
 		//获取商品分类
@@ -128,7 +126,7 @@ public class ProductServlet extends HttpServlet {
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productEdit.jsp").forward(req, resp);
 	}
-	
+
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//1、获取请求参数
 		//2、处理业务请求
@@ -140,16 +138,22 @@ public class ProductServlet extends HttpServlet {
 		if (hasLength(req.getParameter("maxPrice"))) {
 			queryObject.setMaxPrice(new BigDecimal(req.getParameter("maxPrice")));
 		}
-		
+		if (!"-1".equals(req.getParameter("dir_id")) && hasLength(req.getParameter("dir_id"))) {
+			queryObject.setDir_id(Long.valueOf(req.getParameter("dir_id")));
+		}
+
 		List<RevanProductInfo> list = productDAO.query4(queryObject);
 		req.setAttribute("list", list);
 		req.setAttribute("qObject", queryObject);
+		//获取商品分类
+		List<RevanProductDir> productDirs = productDirDAO.getList();
+		req.setAttribute("productDir", productDirs);
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productList.jsp").forward(req, resp);
 	}
-	
+
 	boolean hasLength(String string) {
 		return string != null && string.length() > 0;
 	}
-	
+
 }

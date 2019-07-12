@@ -25,6 +25,7 @@ public class RevanProductQueryObject extends RevanQueryObject {
 	private String productName;
 	private BigDecimal minPrice;
 	private BigDecimal maxPrice;
+	private Long dir_id;
 
 	@Override
 	public void customQuery() {
@@ -39,6 +40,10 @@ public class RevanProductQueryObject extends RevanQueryObject {
 
 		if (maxPrice != null) {
 			super.addQuery("salePrice <= ?", maxPrice);
+		}
+		
+		if (dir_id != null) {
+			super.addQuery("dir_id = ?", dir_id);
 		}
 	}
 }
