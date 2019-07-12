@@ -3,6 +3,7 @@
  */
 package com.revanwang.product.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -107,6 +108,57 @@ public class RevanProductDAOImpl implements IRevanProductDAO {
 		productInfo.setProduct(product);
 		productInfo.setProductDir(productDir);
 		return productInfo;
+	}
+
+	
+	@Override
+	public List<RevanProductInfo> query(String name, BigDecimal minPrice, BigDecimal maxPrice) {
+		//拼接SQL语句
+		StringBuilder sql = new StringBuilder("SELECT * FROM t_product");
+		//接收参数值
+		List<Object> paramsList = new ArrayList<>();
+		
+		//如果商品名称存在
+		if (hasLength(name)) {
+			sql.append(" WHERE productName Like ?");
+			paramsList.add("%"+name+"%");
+		}
+		
+		if (minPrice != null) {
+			sql.append(" AND salePrice >= ?");
+			paramsList.add(minPrice);
+		}
+		
+		if (maxPrice != null) {
+			sql.append(" AND salePrice <= ?");
+			paramsList.add(maxPrice);
+		}
+		System.out.println("查询条件"+sql.toString());
+		System.out.println("查询参数"+paramsList.toString());
+		List<RevanProductInfo> productInfos = new ArrayList<>();
+		List<RevanProduct> proList = RevanJdbcTemplate.executeQuery(sql.toString(), new RevanResultHandle<RevanProduct>(RevanProduct.class), paramsList.toArray());
+		for (RevanProduct pd : proList) {
+			//分类id
+			Long dir_id = pd.getDir_id();
+			//获取缓存对象
+			RevanProductDir productDir = productDirMap.get(dir_id);
+			if (productDir == null) {
+				productDir = dirDAO.getProduct(dir_id);
+				//存储到缓存中
+				productDirMap.put(dir_id, productDir);
+			}
+			//商品详情
+			RevanProductInfo productInfo = new RevanProductInfo();
+			productInfo.setProduct(pd);
+			productInfo.setProductDir(productDir);
+			productInfos.add(productInfo);
+		}
+		return productInfos;
+	}
+
+	
+	private boolean hasLength(String string) {
+		return string != null && string.length() > 0;
 	}
 	
 }

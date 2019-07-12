@@ -3,6 +3,7 @@
  */
 package com.revanwang.product.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.revanwang.product.domain.RevanProduct;
@@ -73,4 +74,16 @@ public interface IRevanProductDAO {
 	 * @Date Jul 11, 20199:48:38 AM
 	 */
 	List<RevanProductInfo>getProductList();
+	
+
+	/**
+	 * @Desc				查询列表
+	 * @param name			商品名称
+	 * @param minPrice		最低价格
+	 * @param maxPrice		最高价格
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:14:35 AM
+	 */
+	List<RevanProductInfo>query(String name, BigDecimal minPrice, BigDecimal maxPrice);
 }

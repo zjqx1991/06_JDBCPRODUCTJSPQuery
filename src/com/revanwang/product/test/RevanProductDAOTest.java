@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
+import com.revanwang.product.domain.RevanProductInfo;
 
 /**
  * @Desc 	
@@ -77,4 +78,28 @@ public class RevanProductDAOTest {
 		}
 	}
 
+	/**
+	 * @Desc
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:31:51 AM
+	 */
+	/**
+	 * @Desc
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:31:56 AM
+	 */
+	/**
+	 * @Desc
+	 * @auther Revan Wang
+	 * @Date Jul 12, 201911:33:09 AM
+	 */
+	@Test
+	public void testQuery() {
+//		productDAO.query("樱桃", new BigDecimal(100), new BigDecimal(200));
+		List<RevanProductInfo> list = productDAO.query("樱桃", new BigDecimal(102), new BigDecimal(102));
+		Iterator<RevanProductInfo> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
+		}
+	}
 }
