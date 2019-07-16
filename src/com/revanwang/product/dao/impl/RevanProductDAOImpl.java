@@ -16,6 +16,7 @@ import com.revanwang.product.dao.IRevanProductDirDAO;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductDir;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.page.RevanPageResult;
 import com.revanwang.product.query.RevanProductQueryObject;
 import com.revanwang.product.template.RevanJdbcTemplate;
 import com.revanwang.product.template.handle.IRevanResultHandle;
@@ -363,4 +364,86 @@ public class RevanProductDAOImpl implements IRevanProductDAO {
 		return productInfos;
 	}
 
+	
+	public RevanPageResult queryPage_1(Integer currentPage, Integer pageSize) {
+		//------------ 获取列表内容 -------------
+		String sql = "SELECT * FROM t_product LIMIT ?, ?";
+		List<RevanProduct> proList =  RevanJdbcTemplate.executeQuery(sql, new RevanResultHandle<RevanProduct>(RevanProduct.class), (currentPage - 1) * pageSize, pageSize);
+		//------------ 获取内容总个数 -------------
+		String countSql = "SELECT COUNT(*) FROM t_product";
+		Integer total = RevanJdbcTemplate.executeQuery(countSql, new IRevanResultHandle<Integer>() {
+			@Override
+			public Integer resultHandle(ResultSet resultSet) {
+				try {
+					if (resultSet.next()) {
+						return resultSet.getInt(1);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+		});
+		RevanPageResult pageResult = new RevanPageResult(currentPage, pageSize, total, proList);
+		return pageResult;
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public RevanPageResult queryPage(RevanProductQueryObject queryObject) {
+		//1、查询内容信息
+		String sql = "SELECT * FROM t_product" + queryObject.querySQL() + " LIMIT ?, ?";
+		//参数
+		List<Object> paramsList = new ArrayList<>(queryObject.queryParams());
+		paramsList.add((queryObject.getCurrentPage() - 1) * queryObject.getPageSize());
+		paramsList.add(queryObject.getPageSize());
+		System.out.println("请求参数：" + paramsList.toString());
+		List<RevanProductInfo> productInfos = new ArrayList<>();
+		List<RevanProduct> proList = RevanJdbcTemplate.executeQuery(
+				sql,//SQL语句
+				new RevanResultHandle<RevanProduct>(RevanProduct.class),//结构集 
+				paramsList.toArray()//SQL参数
+				);
+		for (RevanProduct pd : proList) {
+			//分类id
+			Long dir_id = pd.getDir_id();
+			//获取缓存对象
+			RevanProductDir productDir = productDirMap.get(dir_id);
+			if (productDir == null) {
+				productDir = dirDAO.getProduct(dir_id);
+				//存储到缓存中
+				productDirMap.put(dir_id, productDir);
+			}
+			//商品详情
+			RevanProductInfo productInfo = new RevanProductInfo();
+			productInfo.setProduct(pd);
+			productInfo.setProductDir(productDir);
+			productInfos.add(productInfo);
+		}
+		
+		//2、查询个数
+		String countSql = "SELECT COUNT(*) FROM t_product" + queryObject.querySQL();
+		Integer total = RevanJdbcTemplate.executeQuery(countSql, new IRevanResultHandle<Integer>() {
+			@Override
+			public Integer resultHandle(ResultSet resultSet) {
+				try {
+					if (resultSet.next()) {
+						return resultSet.getInt(1);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+		});
+		System.out.println("总个数：" + total);
+		System.out.println("CurrentPage：" + queryObject.getCurrentPage());
+		System.out.println("PageSize：" + queryObject.getPageSize());
+		RevanPageResult pageResult = new RevanPageResult(queryObject.getCurrentPage(), queryObject.getPageSize(), total, productInfos);
+		return pageResult;
+	}
+	
+	
 }

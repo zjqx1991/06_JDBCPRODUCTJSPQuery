@@ -13,6 +13,7 @@ import com.revanwang.product.dao.IRevanProductDAO;
 import com.revanwang.product.dao.impl.RevanProductDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.page.RevanPageResult;
 import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
@@ -155,4 +156,24 @@ public class RevanProductDAOTest {
 		}
 	}
 
+	@Test
+	public void testQueryPage() {
+		RevanProductQueryObject qo = new RevanProductQueryObject();
+//		qo.setProductName("樱桃");
+//				qo.setMinPrice(new BigDecimal(100));
+//				qo.setMaxPrice(new BigDecimal(200));
+		qo.setCurrentPage(1);
+		qo.setPageSize(3);
+		
+		RevanPageResult pageResult = productDAO.queryPage(qo);;
+		System.out.println("List：" + pageResult.getListData().toString());
+		System.out.println("Listcount：" + pageResult.getListData().size());
+		System.out.println("HomePage：" + pageResult.getHomePage());
+		System.out.println("PreviousPage：" + pageResult.getPreviousPage());
+		System.out.println("CurrentPage：" + pageResult.getCurrentPage());
+		System.out.println("NextPage：" + pageResult.getNextPage());
+		System.out.println("LastPage：" + pageResult.getLastPage());
+		System.out.println("PageSize：" + pageResult.getPageSize());
+		System.out.println("Total：" + pageResult.getTotalCount());
+	}
 }

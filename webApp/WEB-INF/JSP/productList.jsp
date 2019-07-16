@@ -38,21 +38,29 @@
 			<th>成本价</th>
 			<th colspan="2">操作</th>
 		</tr>
-		
-		<c:forEach items="${list}" var='item' varStatus="status" >
+		<c:forEach items="${pageResult.listData}" var='item' varStatus="status" >
 			<tr style="background-color:${status.count % 2 == 0 ? 'gray' : ''};">
-				<td>${item.product.getId()}</td>
-				<td>${item.product.getProductName()}</td>
-				<td>${item.productDir.dir_name}</td>
-				<td>${item.product.getSalePrice()}</td>
-				<td>${item.product.getSupplier()}</td>
-				<td>${item.product.getBrand()}</td>
-				<td>${item.product.getCutoff()}</td>
-				<td>${item.product.getCostPrice()}</td>
-				<td><a href="/product?cmd=edit&id=${item.product.getId()}">Edit</a></td>
-				<td><a href="/product?cmd=delete&id=${item.product.getId()}">Delete</a></td>
-			</tr>
+				<td>${item.product.id}</td>
+				<td>${item.product.productName}</td>
+				<td>${item.productDir.dir_name}</td> 
+				<td>${item.product.salePrice}</td>
+				<td>${item.product.supplier}</td>
+				<td>${item.product.brand}</td>
+				<td>${item.product.cutoff}</td>
+				<td>${item.product.costPrice}</td>
+				<td><a href="/product?cmd=edit&id=${item.product.id}">Edit</a></td>
+				<td><a href="/product?cmd=delete&id=${item.product.id}">Delete</a></td>
+			</tr> 
 		</c:forEach>
+		<tr>
+			<td colspan="10" align="center">
+				<a href="/product?cmd=list&currentPage=1">首页</a>
+				<a href="/product?cmd=list&currentPage=${pageResult.previousPage}">上一页</a>
+				<a href="/product?cmd=list&currentPage=${pageResult.nextPage}">下一页</a>
+				<a href="/product?cmd=list&currentPage=${pageResult.lastPage}">尾页</a>
+				一共${pageResult.totalCount}条数据，当前${pageResult.currentPage}/${pageResult.lastPage}第页
+			</td>
+		</tr>
 		
 	</table>
 	

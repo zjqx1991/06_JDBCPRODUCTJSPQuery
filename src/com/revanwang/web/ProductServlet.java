@@ -20,6 +20,7 @@ import com.revanwang.product.dao.impl.RevanProductDirDAOImpl;
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductDir;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.page.RevanPageResult;
 import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
@@ -127,30 +128,60 @@ public class ProductServlet extends HttpServlet {
 		req.getRequestDispatcher("/WEB-INF/JSP/productEdit.jsp").forward(req, resp);
 	}
 
+	/*
+		protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			//1、获取请求参数
+			//2、处理业务请求
+			RevanProductQueryObject queryObject = new RevanProductQueryObject();
+			queryObject.setProductName(req.getParameter("productName"));
+			if (hasLength(req.getParameter("minPrice"))) {
+				queryObject.setMinPrice(new BigDecimal(req.getParameter("minPrice")));
+			}
+			if (hasLength(req.getParameter("maxPrice"))) {
+				queryObject.setMaxPrice(new BigDecimal(req.getParameter("maxPrice")));
+			}
+			if (!"-1".equals(req.getParameter("dir_id")) && hasLength(req.getParameter("dir_id"))) {
+				queryObject.setDir_id(Long.valueOf(req.getParameter("dir_id")));
+			}
+			if (hasLength(req.getParameter("keywords"))) {
+				queryObject.setKeywords(req.getParameter("keywords"));
+			}
+	
+			List<RevanProductInfo> list = productDAO.query5(queryObject);
+			req.setAttribute("list", list);
+			req.setAttribute("qObject", queryObject);
+			//获取商品分类
+			List<RevanProductDir> productDirs = productDirDAO.getList();
+			req.setAttribute("productDir", productDirs);
+			//3、跳转界面
+			req.getRequestDispatcher("/WEB-INF/JSP/productList.jsp").forward(req, resp);
+		}
+	*/
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//1、获取请求参数
-		//2、处理业务请求
+		Integer currentPage = 1;
 		RevanProductQueryObject queryObject = new RevanProductQueryObject();
-		queryObject.setProductName(req.getParameter("productName"));
-		if (hasLength(req.getParameter("minPrice"))) {
-			queryObject.setMinPrice(new BigDecimal(req.getParameter("minPrice")));
+//		queryObject.setProductName(req.getParameter("productName"));
+//		if (hasLength(req.getParameter("minPrice"))) {
+//			queryObject.setMinPrice(new BigDecimal(req.getParameter("minPrice")));
+//		}
+//		if (hasLength(req.getParameter("maxPrice"))) {
+//			queryObject.setMaxPrice(new BigDecimal(req.getParameter("maxPrice")));
+//		}
+//		if (!"-1".equals(req.getParameter("dir_id")) && hasLength(req.getParameter("dir_id"))) {
+//			queryObject.setDir_id(Long.valueOf(req.getParameter("dir_id")));
+//		}
+//		if (hasLength(req.getParameter("keywords"))) {
+//			queryObject.setKeywords(req.getParameter("keywords"));
+//		}
+		//1、获取请求参数
+		if (hasLength(req.getParameter("currentPage"))) {
+			currentPage = Integer.valueOf(req.getParameter("currentPage"));
 		}
-		if (hasLength(req.getParameter("maxPrice"))) {
-			queryObject.setMaxPrice(new BigDecimal(req.getParameter("maxPrice")));
-		}
-		if (!"-1".equals(req.getParameter("dir_id")) && hasLength(req.getParameter("dir_id"))) {
-			queryObject.setDir_id(Long.valueOf(req.getParameter("dir_id")));
-		}
-		if (hasLength(req.getParameter("keywords"))) {
-			queryObject.setKeywords(req.getParameter("keywords"));
-		}
-
-		List<RevanProductInfo> list = productDAO.query5(queryObject);
-		req.setAttribute("list", list);
-		req.setAttribute("qObject", queryObject);
-		//获取商品分类
-		List<RevanProductDir> productDirs = productDirDAO.getList();
-		req.setAttribute("productDir", productDirs);
+		queryObject.setCurrentPage(currentPage);
+		//2、处理业务
+		RevanPageResult pageResult = productDAO.queryPage(queryObject);
+		req.setAttribute("pageResult", pageResult);
+		System.out.println(pageResult.getListData().toString());
 		//3、跳转界面
 		req.getRequestDispatcher("/WEB-INF/JSP/productList.jsp").forward(req, resp);
 	}

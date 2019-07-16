@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.revanwang.product.domain.RevanProduct;
 import com.revanwang.product.domain.RevanProductInfo;
+import com.revanwang.product.page.RevanPageResult;
 import com.revanwang.product.query.RevanProductQueryObject;
 
 /**
@@ -134,4 +135,14 @@ public interface IRevanProductDAO {
 	 * @Date Jul 12, 201911:14:35 AM
 	 */
 	List<RevanProductInfo>query5(RevanProductQueryObject queryObject);
+	
+	/**
+	 * @Desc				分页查询
+	 * @param currentPage	查询页
+	 * @param pageSize		每页个数
+	 * @return
+	 * @auther Revan Wang
+	 * @Date Jul 16, 201911:48:11 AM
+	 */
+	RevanPageResult queryPage(RevanProductQueryObject queryObject);
 }
